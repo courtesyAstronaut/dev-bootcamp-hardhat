@@ -10,6 +10,12 @@ module.exports = async ({
     const { deployer } = await getNamedAccounts()
     const chainId = await getChainId()
     let ethUsdPriceFeedAddress
+    /* 
+    * WITH FORKED ETH-MAINNET:
+    * always look up which aggregator contract to use from our config, even when working with a local network. 
+    * if no Mainnet is forked, use the "if(chainId == 31337)"
+    */
+
     if (chainId == 31337) {
         const EthUsdAggregator = await deployments.get('EthUsdAggregator')
         ethUsdPriceFeedAddress = EthUsdAggregator.address
